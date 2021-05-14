@@ -25,7 +25,7 @@ export function InputWithButton(props) {
         >
 
             <TextInput
-                style={tailwind("flex-1 border-b-2 border-gray-100 text-black")}
+                style={tailwind("flex-1 border-b-2 border-gray-300 text-black")}
                 onChangeText={contentHandler}
                 value={content}
                 placeholder={props.placeholder}
