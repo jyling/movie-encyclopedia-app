@@ -10,10 +10,10 @@ import {
 import tailwind from 'tailwind-rn';
 import { Card } from '../../../UI/Card';
 import {InputWithButton} from '../../../UI/InputWithButton'
-export function Search() {
+export const Search = () => {
 
     const [searchTerm, setSearchTerm] = useState(null);
-    const searchTermHandler = (e) => {
+    const searchTermHandler = (e :any) => {
         setSearchTerm(e)
     }
     return (
