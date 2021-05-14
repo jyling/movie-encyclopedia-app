@@ -8,17 +8,20 @@ import {
     Button,
     Image
 } from 'react-native';
+import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
 import { Card } from '../../../UI/Card';
 import { ChipList } from "./ChipList/ChipList";
 export const Movie = (props : any) => {
+    const history = useHistory();
     const clickedHandler = () => {
-        props.onClick(props.id)
+        history.push(`/movie/${props.id}`)
     }
     const characters = props.characters.map((CharacterData : any) => CharacterData.Character.name)
 
     return (
-        <TouchableHighlight underlayColor="#f0f4f7" onPress={() => console.log("clicked")}>
+        <View key={props.key}>
+            <TouchableHighlight  underlayColor="#f0f4f7" onPress={clickedHandler}>
         <Card>
         <View style={tailwind("flex flex-row overflow-hidden")}>
             <Image
@@ -44,5 +47,7 @@ export const Movie = (props : any) => {
         </View>
         </Card>
         </TouchableHighlight>
-    )
+    
+        </View>
+        )
 }

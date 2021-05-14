@@ -22,6 +22,7 @@ export const PageWrapper = observer((props : any) => {
       <View style={tailwind("min-h-full bg-gray-500")}>
         <Route exact path="/" component={Home} />
         <Route path="/create" component={Create} />
+        <Route path="/movie/:id" component={MovieView} />
       </View>
     </View>
   )
