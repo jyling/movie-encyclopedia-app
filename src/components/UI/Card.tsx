@@ -3,7 +3,7 @@ import React from 'react';
 import tailwind from "tailwind-rn";
 export const Card = (props) => { 
     return (
-        <View style={tailwind("bg-white m-3 rounded p-4")}>
+        <View style={[tailwind("bg-white m-3 rounded p-4"), props.style]}>
             {props.children}
         </View>
     )
