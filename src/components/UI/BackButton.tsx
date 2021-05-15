@@ -11,5 +11,5 @@ export const BackButton = (props : any) => {
             history.push(props.path)
         }
     }
-    return (<Button onPress={backButtonClicked} title={props.title}></Button>)
+    return (<Button style={props.style} color={props.color} onPress={backButtonClicked} title={props.title || "Back"}></Button>)
 }
