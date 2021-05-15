@@ -38,12 +38,12 @@ query {
 
 `
 
-export const SEARCH_MOVIES = (query : SearchMovieInput) => {
-  const queryFormated = JSON.stringify(query).replace(/"([^"]+)":/g, '$1:')
+export const SEARCH_MOVIES = () => {
   return gql`
-query {
-  movie(searchMovieInput: ${queryFormated}) {
-      id
+query getMovies($searchMovieInput : SearchMovieInput, $limit: Int, $page: Int){
+  movies (searchMovieInput: $searchMovieInput , limit: $limit, page: $page) {
+      Movie { 
+        id
       name
       description
       releasedDate
@@ -72,6 +72,11 @@ query {
           name
         }
       }
+      }
+      pagination {
+      page
+      totalPage
+    }
       
     }
 }

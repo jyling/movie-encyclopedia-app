@@ -11,7 +11,8 @@ import {
 import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
 import { Card } from '../../../UI/Card';
-import { ChipList } from "./ChipList/ChipList";
+import { Divider } from '../../../UI/Divider';
+import { ChipList } from "../../../UI/ChipList/ChipList";
 export const Movie = (props : any) => {
     const history = useHistory();
     const clickedHandler = () => {
@@ -36,10 +37,8 @@ export const Movie = (props : any) => {
                 <Text style={tailwind("w-60")}>
                    {props.description}
                 </Text>
-                <View
-                    style={tailwind("border-b border-gray-100 my-2")}
-                />
-                <View>
+                    <Divider></Divider>
+                    <View>
                     <Text style={tailwind("mb-1")}>Characters</Text>
                     <ChipList items={characters || ["No Charactersr"]}></ChipList>
                 </View>

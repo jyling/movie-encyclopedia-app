@@ -31,7 +31,7 @@ export class MoviesStore {
 
     @action
     public setMovies(data : any) {
-            this.movies = data.movie
+            this.movies = data.movies.Movie
     }
 
 
