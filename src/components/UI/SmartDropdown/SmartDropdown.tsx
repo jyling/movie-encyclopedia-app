@@ -51,7 +51,6 @@ export const SmartDropdown = (props) => {
 
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
                     setModalVisible(!modalVisible);
                 }}
             >
