@@ -18,6 +18,7 @@ import { SmartDropdownWrapper } from '../../UI/SmartDropdown/SmartDropdownWrappe
 
 const initialForm = {
     name: "",
+    image: "",
     description: "",
     characters: [],
     releasedDate: new Date(),
@@ -28,6 +29,7 @@ const initialForm = {
 
 const initialErrorForm = {
     name: "",
+    image: "",
     description: "",
     characters: "",
     releasedDate: "",
@@ -45,6 +47,7 @@ export const Edit = inject("store")((props) => {
     const movie = props.store.movieStore.movies.find((movie : any) => movie.id == id)
     const [formData, setFormData] = useState({
         name: movie.name,
+        image: movie.imageURL,
         description: movie.description,
         characters: movie.MovieCharacter.map(characterData => characterData.Character.name),
         releasedDate: movie.releasedDate,
@@ -139,9 +142,20 @@ export const Edit = inject("store")((props) => {
         })
     }
 
+    const ImageHandler = (image) => {
+        console.log({imagefeqqefqefqef: image})
+        setFormData(state => {
+            return {
+                ...state,
+                image: image.base64
+            }
+        })
+    }   
+
     const onSubmitHandler = () => {
         const updateData : UpdateMovieInput = {
             id: movie.id,
+            image: formData.image,
             name: formData.name,
             description: formData.description,
             releasedDate: formData.releasedDate,
@@ -150,7 +164,6 @@ export const Edit = inject("store")((props) => {
             writers: formData.writers,
             directors: formData.directors
         }
-
         updateMovie({
             variables : {
                 updateMovieInput : updateData
@@ -160,6 +173,10 @@ export const Edit = inject("store")((props) => {
     }
     
     const formatedDate = moment(formData.releasedDate).format("MMMM Do YYYY");
+    const  imageData = formData.image? {
+        uri: formData.image,
+        base64: ""
+    } : null
     return (
         <>
             <ScrollView>
@@ -167,14 +184,13 @@ export const Edit = inject("store")((props) => {
 
                 {!loading && <View style={{marginBottom: 300}}>
                     <Card>
-                        <Text>{!JSON.stringify(formData)}</Text>
                         <Text style={tailwind("text-3xl font-light text-center text-black")}>Editing {movie.name}</Text>
                     </Card>
                     <Card style={tailwind("p-2")}>
                         <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
-                            <BackButton></BackButton>
+                        <BackButton to={`/movie/${id}`}></BackButton>
                         </View>
-                        <ImageInput style={tailwind("mb-3")}></ImageInput>
+                        <ImageInput onImageChange={ImageHandler} value={imageData} style={tailwind("mb-3")}></ImageInput>
                         <Text >Movie Name :</Text>
                         <Input
                             onChangeText={NameContentHandler}
