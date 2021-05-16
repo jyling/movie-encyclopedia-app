@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import tailwind from 'tailwind-rn';
 import { ChipList } from '../ChipList/ChipList';
 import { SmartDropdown } from './SmartDropdown';
 
 export const SmartDropdownWrapper = (props) => {
-    const { name, value, loading, show, items } = props;
+    const { name, loading, value, show, items } = props;
     const SelectedItemHandler = (e) => {
         if (props.onValueChange) {
             props.onValueChange(e)
@@ -21,6 +21,7 @@ export const SmartDropdownWrapper = (props) => {
             <SmartDropdown
                 show={show || false}
                 title={name}
+                value={value}
                 items={items.map(item => {
                     return {
                         label: item.name,

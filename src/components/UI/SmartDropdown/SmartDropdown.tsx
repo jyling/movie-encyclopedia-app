@@ -10,11 +10,12 @@ import { ButtonGroup } from "react-native-elements/dist/buttons/ButtonGroup";
 import { ListItem } from "react-native-elements/dist/list/ListItem";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 import { RenderItem } from "./RenderItem";
+import { Divider } from "react-native-elements/dist/divider/Divider";
 
 export const SmartDropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(props.show);
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState([]);
+    const [value, setValue] = useState(props.value || []);
     const [createNew, setCreateNew] = useState(false)
     const [items, setItems] = useState(props.items || []);
 
@@ -45,10 +46,10 @@ export const SmartDropdown = (props) => {
 
     return (
         <View>
-            <Modal
-                animationType="slide"
-                transparent={true}
 
+            <Modal
+                animationType="fade"
+                transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
                     setModalVisible(!modalVisible);
@@ -56,11 +57,14 @@ export const SmartDropdown = (props) => {
             >
 
                 <View
-                    style={tailwind("flex-1 justify-center items-center p-3")}
+                    style={tailwind("flex-1 justify-center items-center p-3 bg-black bg-opacity-50")}
                 >
                     <Card style={[tailwind("w-full border m-5"), {
                         minHeight: "70%"
                     }]} >
+                        <View style={tailwind("flex items-end")}>
+                        
+                        </View>
                         <View>
                             <ButtonGroup
                                 onPress={(e) => { setCreateNew(e == 1) }}
@@ -74,7 +78,7 @@ export const SmartDropdown = (props) => {
                                 <InputWithButton
                                     deleteContentOnButtonClick={true}
                                     onButtonClick={AddItemHandler}
-                                    button={"Add New " + ( props.title || "Items")}></InputWithButton>
+                                    button={"Add New " + (props.title || "Items")}></InputWithButton>
                             </View>}
                             {!createNew && <DropDownPicker
                                 searchable={true}
@@ -95,21 +99,23 @@ export const SmartDropdown = (props) => {
                             </ScrollView>
                         </View>
 
-
                         <Button
-                            buttonStyle={tailwind("bg-blue-400 mt-3")}
+                            buttonStyle={tailwind("bg-red-500 mt-5")}
                             title="Close"
                             onPress={ModalOpenHandler}
                         />
+
                     </Card>
                 </View>
             </Modal>
 
+            <View style={tailwind("flex items-end")}>
             <Button
-                buttonStyle={tailwind("bg-blue-400")}
+                buttonStyle={tailwind("bg-blue-400 w-1/3 text-center")}
                 onPress={ModalOpenHandler}
                 title={"Add " + (props.title || "Items")}
             />
+            </View>
         </View>
     )
 }
