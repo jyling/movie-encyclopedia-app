@@ -11,6 +11,7 @@ import { Home } from "../pages/Home/Home";
 import { Create } from "../pages/Create/Create";
 import { observer } from 'mobx-react';
 import {MovieView} from '../pages/MovieView/MovieView'
+import {Edit} from '../pages/Edit/Edit'
 
 export const PageWrapper = observer((props : any) => {
   
@@ -23,6 +24,7 @@ export const PageWrapper = observer((props : any) => {
         <Route exact path="/" component={Home} />
         <Route path="/create" component={Create} />
         <Route path="/movie/:id" component={MovieView} />
+        <Route path="/edit/movie/:id" component={Edit} />
       </View>
     </View>
   )
