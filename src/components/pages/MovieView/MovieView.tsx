@@ -1,8 +1,11 @@
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { inject } from 'mobx-react';
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
+import { FIND_MOVIE } from '../../../helper/query';
 import { BackButton } from '../../UI/BackButton';
 import { Card } from '../../UI/Card';
 import { ChipList } from '../../UI/ChipList/ChipList';
@@ -17,6 +20,7 @@ export const MovieView = inject("store")((props : any) => {
     const genres = movie.MovieGenre.map((genreData : any) => genreData.Genre.name)
     const writers = movie.MovieWriter.map((writerData : any) => writerData.People.name)
     const directors = movie.MovieDirector.map((directorData : any) => directorData.People.name)
+    const formatedDate = moment(movie.releasedDate).format("MMMM Do YYYY");
 
     const editHandler = () => {
         history.push(`/edit/movie/${movie.id}`)
@@ -42,6 +46,8 @@ export const MovieView = inject("store")((props : any) => {
             />
             </View>
                 <Text style={tailwind("text-3xl")}>{movie.name}</Text>
+                <Divider></Divider>
+                <Text>Released on {formatedDate}</Text>
                 <Divider></Divider>
                 <Text>Description :</Text>
                 <Text>{movie.description}</Text>
