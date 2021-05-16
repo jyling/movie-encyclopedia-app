@@ -6,8 +6,8 @@ import { Button } from 'react-native-elements';
 
 
 export const ImageInput = (props) => {
-    const [imageData, setImageData] = useState(props.image || undefined);
-
+    const [imageData, setImageData] = useState(props.value || undefined);
+    
     const imageSelectHandler = async() => {
         launchImageLibrary({
             mediaType : 'photo',
@@ -26,13 +26,20 @@ export const ImageInput = (props) => {
                 base64: result.base64,
             })
             if (props.onImageChange) {
-                props.onImageChange(result.base64)
+                props.onImageChange({
+                    uri: result.uri,
+                    base64: result.base64,
+                })
             }
         })
     }
     
     const removeImageHandler = async () => {
         setImageData(null)
+        props.onImageChange({
+            uri: "",
+            base64: "",
+        })
     }
     
     
