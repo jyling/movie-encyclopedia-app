@@ -2,7 +2,8 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { inject } from 'mobx-react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
 import { FIND_MOVIE } from '../../../helper/query';
@@ -30,11 +31,13 @@ export const MovieView = inject("store")((props : any) => {
         <ScrollView style={tailwind("mb-20")}>
             <View style={tailwind("p-2")}>
             <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
-            <BackButton></BackButton>
+                <BackButton></BackButton>
             </View>
             <Card>
             <View style={tailwind("flex justify-center items-end mb-3")}>
-                <Button onPress={editHandler} title="Edit" color="orange"></Button>
+                <Button onPress={editHandler} title="Edit" buttonStyle={
+                    tailwind("bg-yellow-500 px-5")
+                }></Button>
             </View>
             <View style={tailwind("flex justify-center items-center mb-3")}>
             <Image
