@@ -174,8 +174,8 @@ export const Edit = inject("store")((props) => {
                         <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
                             <BackButton></BackButton>
                         </View>
-                        <ImageInput></ImageInput>
-                        <Text>Movie Name :</Text>
+                        <ImageInput style={tailwind("mb-3")}></ImageInput>
+                        <Text >Movie Name :</Text>
                         <Input
                             onChangeText={NameContentHandler}
                             value={formData.name}

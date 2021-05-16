@@ -38,7 +38,7 @@ export const MovieList = inject("store")((props : any) => {
             <ScrollView style={tailwind("h-80 mb-20")} >
                 {props.movies.map((data : any) => (
                     <View  key={data.id}>
-                        <Movie id={data.id} name={data.name} description={data.description} characters={data.MovieCharacter}></Movie>
+                        <Movie id={data.id} name={data.name} image={data.imageURL || null} description={data.description} characters={data.MovieCharacter}></Movie>
                     </View>
                 ))}
             <Card style={tailwind("flex-1 flex-row justify-between items-center")}>

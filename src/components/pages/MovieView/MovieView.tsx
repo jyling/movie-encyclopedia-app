@@ -22,7 +22,7 @@ export const MovieView = inject("store")((props : any) => {
     const writers = movie.MovieWriter.map((writerData : any) => writerData.People.name)
     const directors = movie.MovieDirector.map((directorData : any) => directorData.People.name)
     const formatedDate = moment(movie.releasedDate).format("MMMM Do YYYY");
-
+    console.log(movie)
     const editHandler = () => {
         history.push(`/edit/movie/${movie.id}`)
     }
@@ -41,11 +41,11 @@ export const MovieView = inject("store")((props : any) => {
             </View>
             <View style={tailwind("flex justify-center items-center mb-3")}>
             <Image
-                style={ [{ width: 154, height: 236, resizeMode: "contain" },
+                style={ [{ width: 154, height: 236, resizeMode: "cover" },
                     tailwind("bg-gray-400")
                 ]
                 }
-                source={{ uri: props.image }}
+                source={{ uri: movie.imageURL || null }}
             />
             </View>
                 <Text style={tailwind("text-3xl")}>{movie.name}</Text>

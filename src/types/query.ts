@@ -19,12 +19,13 @@ export interface SearchMovieInput {
 
   export interface CreateMovieInput {
     name: string,
+    image: string,
     description: string,
     releasedDate: Date
     characters: string[]
     genres: string[],
     writers: string[],
-    directors: string[]
+    directors: string[] 
   }
   
 

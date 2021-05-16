@@ -23,6 +23,7 @@ import { SmartDropdownWrapper } from "../../UI/SmartDropdown/SmartDropdownWrappe
 
 const initialForm = {
     name: "",
+    image: "",
     description: "",
     characters: [],
     releasedDate: new Date(),
@@ -33,6 +34,7 @@ const initialForm = {
 
 const initialErrorForm = {
     name: "",
+    image: "",
     description: "",
     characters: "",
     releasedDate: "",
@@ -50,6 +52,7 @@ export const Create = inject("store")((props) => {
 
     const  [ addMovie , { data: insertMovieData, data: insertError } ] = useMutation(INSERT_MOVIE, {
         onError: (e) => {
+            console.log(e);
             setFormError(Object.assign.apply(Object, e.graphQLErrors[0].extensions.exception.response.message))
         },
         onCompleted: (data) => {
@@ -124,9 +127,19 @@ export const Create = inject("store")((props) => {
         })
     }
 
+    const ImageHandler = (image) => {
+        setFormData(state => {
+            return {
+                ...state,
+                image: image
+            }
+        })
+    }   
+
     const onSubmitHandler = () => {
         const insertData : CreateMovieInput = {
             name: formData.name,
+            image: formData.image,
             description: formData.description,
             releasedDate: formData.releasedDate,
             characters: formData.characters,
@@ -159,7 +172,7 @@ export const Create = inject("store")((props) => {
                         <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
                             <BackButton></BackButton>
                         </View>
-                        <ImageInput></ImageInput>
+                        <ImageInput onImageChange={ImageHandler} style={tailwind("mb-3")}></ImageInput>
                         <Text>Movie Name :</Text>
                         <Input
                             onChangeText={NameContentHandler}

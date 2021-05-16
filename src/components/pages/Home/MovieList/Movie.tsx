@@ -26,7 +26,7 @@ export const Movie = (props : any) => {
         <Card>
         <View style={tailwind("flex flex-row overflow-hidden")}>
             <Image
-                style={ [{ width: 94, height: 166, resizeMode: "contain" },
+                style={ [{ width: 94, height: 166, resizeMode: "cover" },
                     tailwind("bg-gray-400")
                 ]
                 }

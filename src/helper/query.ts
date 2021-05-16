@@ -4,6 +4,7 @@ export const FETCH_MOVIES = gql`
 query {
     movie {
       id
+      imageURL
       name
       description
       releasedDate
@@ -134,7 +135,8 @@ export const SEARCH_MOVIES = () => {
 query getMovies($searchMovieInput : SearchMovieInput, $limit: Int, $page: Int){
   movies (searchMovieInput: $searchMovieInput , limit: $limit, page: $page) {
       Movie { 
-        id
+      id
+      imageURL
       name
       description
       releasedDate
@@ -181,6 +183,7 @@ mutation createMovie($createMovieInput : CreateMovieInput){
     createMovieInput: $createMovieInput
   ) { 
       id
+      imageURL
       name
       description
       releasedDate
@@ -219,6 +222,7 @@ mutation updateMovie($updateMovieInput : UpdateMovieInput!){
     updateMovieInput: $updateMovieInput
   ) { 
       id
+      imageURL
       name
       description
       releasedDate
