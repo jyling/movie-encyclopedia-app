@@ -39,6 +39,7 @@ export const Home = inject("store")(observer((props : any) => {
     const searchButtonClickHandler =  () => {
         // const [loadQueryMovies, queryInfo] = useLazyQuery(SEARCH_MOVIES(searchTermArray))
         const searchTermArray = inputParser(searchTerm);
+        setPage(1)
         setQueryTerm(searchTermArray);
     }
 
