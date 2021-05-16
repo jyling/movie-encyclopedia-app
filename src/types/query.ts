@@ -27,3 +27,7 @@ export interface SearchMovieInput {
     directors: string[]
   }
   
+
+  export interface UpdateMovieInput extends CreateMovieInput {
+    id: number
+  }
