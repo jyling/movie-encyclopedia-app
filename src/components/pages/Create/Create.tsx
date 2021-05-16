@@ -155,12 +155,10 @@ export const Create = inject("store")((props) => {
             })
         // setFormData(initialForm) later uncomment
     }
-    
     const formatedDate = moment(formData.releasedDate).format("MMMM Do YYYY");
     return (
         <>
             <ScrollView >
-                <Text> {JSON.stringify(insertError)}</Text>
                 {loading && <Text> Loading</Text>}
 
                 {!loading && <View style={{marginBottom: 300}}>
@@ -170,7 +168,7 @@ export const Create = inject("store")((props) => {
                     </Card>
                     <Card style={tailwind("p-2")}>
                         <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
-                            <BackButton></BackButton>
+                            <BackButton to={"/"}></BackButton>
                         </View>
                         <ImageInput onImageChange={ImageHandler} style={tailwind("mb-3")}></ImageInput>
                         <Text>Movie Name :</Text>
