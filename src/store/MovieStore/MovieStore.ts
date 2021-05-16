@@ -10,18 +10,28 @@ import { SEARCH_MOVIES } from '../../helper/query';
 
 
 export class MoviesStore {
-    @observable movies = []
-    @observable loading = false
+        @observable movies = []
+        @observable loading = false
 
-    @action
-    public setMovies(data : any) {
-            this.movies = data.movies.Movie
-    }
+        @action
+        public setMovies(data: any) {
+                this.movies = data.movies.Movie
+        }
 
-    @action
-    public pushMovie(data : any) {
-            this.movies = [...this.movies, data];
-    }
+        @action
+        public pushMovie(data: any) {
+                this.movies = [...this.movies, data];
+        }
+
+        @action
+        public updateMovie(id, data: any) {
+                this.movies = this.movies.map(movie => {
+                        if (movie.id == id) {
+                                return data;
+                        }
+                        return movie
+                })
+        }
 
 
 }

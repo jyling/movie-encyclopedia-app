@@ -213,6 +213,44 @@ mutation createMovie($createMovieInput : CreateMovieInput){
 }
 `
 
+export const UPDATE_MOVIE = gql`
+mutation updateMovie($updateMovieInput : UpdateMovieInput!){
+  updateMovie(
+    updateMovieInput: $updateMovieInput
+  ) { 
+      id
+      name
+      description
+      releasedDate
+      
+      MovieGenre {
+        Genre {
+          name
+          description
+        }
+      }
+      
+      MovieCharacter {
+        Character {
+          name
+        }
+      }
+      
+      MovieWriter {
+        People {
+          name
+        }
+      }
+      
+      MovieDirector {
+        People {
+          name
+        }
+      }
+    }
+}
+`
+
 export const FIND_MOVIE = gql`
 query movie_find($id : Int!) {
   movie_find(id: $id) {
