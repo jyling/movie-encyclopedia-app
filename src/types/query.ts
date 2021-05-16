@@ -15,4 +15,15 @@ export interface SearchMovieInput {
   
     writers?: string[]
   }
+
+
+  export interface CreateMovieInput {
+    name: string,
+    description: string,
+    releasedDate: Date
+    characters: string[]
+    genres: string[],
+    writers: string[],
+    directors: string[]
+  }
   
