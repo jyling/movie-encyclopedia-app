@@ -14,24 +14,13 @@ export class MoviesStore {
     @observable loading = false
 
     @action
-    public searchMovies(searchTerm: string) {
-        console.log("search")
-
-        const searchTermArray = inputParser(searchTerm);
-        console.log(SEARCH_MOVIES(searchTermArray))
-        const { loading, error, data } = useQuery(SEARCH_MOVIES(searchTermArray))
-
-        this.loading = loading;
-        // if (!loading) {
-        //     this.movies = data.movie
-        // }
-        console.log({ loading, error, data })
-
+    public setMovies(data : any) {
+            this.movies = data.movies.Movie
     }
 
     @action
-    public setMovies(data : any) {
-            this.movies = data.movies.Movie
+    public pushMovie(data : any) {
+            this.movies = [...this.movies, data];
     }
 
 
