@@ -17,8 +17,8 @@ import { BackButton } from "../../UI/BackButton";
 import { Card } from '../../UI/Card';
 import { Divider } from "../../UI/Divider";
 import { ImageInput } from "../../UI/ImageInput";
-import { DatePickerModal } from "./DatePickerModal";
-import { SmartDropdownWrapper } from "./SmartDropdownWrapper";
+import { DatePickerModal } from "../../UI/DatePickerModal";
+import { SmartDropdownWrapper } from "../../UI/SmartDropdown/SmartDropdownWrapper";
 
 
 const initialForm = {
