@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import tailwind from 'tailwind-rn';
-import { ChipList } from '../../UI/ChipList/ChipList';
-import { SmartDropdown } from '../../UI/SmartDropdown/SmartDropdown';
+import { ChipList } from '../ChipList/ChipList';
+import { SmartDropdown } from './SmartDropdown';
 
 export const SmartDropdownWrapper = (props) => {
     const { name, value, loading, show, items } = props;
