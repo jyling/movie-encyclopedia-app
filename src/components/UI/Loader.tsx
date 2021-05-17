@@ -5,7 +5,6 @@ import tailwind from 'tailwind-rn';
 
 
 export const Loader = (props) => {
-    console.log({loader: props})
     return (
         <Modal
             animationType="fade"
