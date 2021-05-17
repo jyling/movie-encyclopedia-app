@@ -20,24 +20,22 @@ import { Loader } from "../../UI/Loader";
 export const Home = inject("store")(observer((props : any) => {
     const [page, setPage] = useState({
         page: 1,
-        totalPage: 2
+        totalPage: 1
     })
     const [searchTerm, setSearchTerm] = useState("")
     const [queryTerm, setQueryTerm] = useState({})
-    const limit = 3;
     const [calledSearch, result] = useLazyQuery(SEARCH_MOVIES(), {
         fetchPolicy: "no-cache",
         variables: {
           searchMovieInput:  queryTerm,
           page: page.page,
-          limit: limit
+          limit: 3
         },
-        onCompleted: () => {
+        onCompleted: (data) => {
             totalPageHandler(data.movies.pagination.totalPage)
             props.store.movieStore.setMovies(data)
         },
         onError: (e) => {
-            console.log(e);
             setSearchTerm(prev => "")
             Alert.alert("We couldn't process your search", e.message)
         }
@@ -75,7 +73,6 @@ export const Home = inject("store")(observer((props : any) => {
             }
         })
     }
-
     return (
         <>
         <Loader loading={loading}></Loader>
