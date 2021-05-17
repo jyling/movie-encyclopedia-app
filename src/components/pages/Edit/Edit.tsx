@@ -69,18 +69,6 @@ export const Edit = inject("store")((props) => {
     });
 
     const history = useHistory();
-    // const  [ addMovie , { data: insertMovieData, data: insertError } ] = useMutation(INSERT_MOVIE, {
-    //     onError: (e) => {
-    //         setFormError(Object.assign.apply(Object, e.graphQLErrors[0].extensions.exception.response.message))
-    //     },
-    //     onCompleted: (data) => {
-    //         if (data) {
-    //             console.log({data})
-    //             props.store.movieStore.pushMovie(data.createMovie)
-    //             history.push(`/movie/${data.createMovie.id}`)
-    //         }
-    //     }
-    // })
 
     const SelectedCharacterHandler = (characters) => {
         setFormData(state => {
