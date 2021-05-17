@@ -38,7 +38,7 @@ export function InputWithButton(props : any) {
                 <TextInput
                     style={tailwind("flex-1 border-b-2 border-gray-300 text-black")}
                     onChangeText={contentHandler}
-                    value={content}
+                    value={props.value}
                     placeholder={props.placeholder}
                 />
                 </View>
