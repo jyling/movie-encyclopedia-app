@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { inject } from 'mobx-react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +6,7 @@ import { Alert, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
-import { FIND_MOVIE } from '../../../helper/query';
+import { DELETE_MOVIE, FIND_MOVIE } from '../../../helper/query';
 import { BackButton } from '../../UI/BackButton';
 import { Card } from '../../UI/Card';
 import { ChipList } from '../../UI/ChipList/ChipList';
@@ -22,6 +22,14 @@ export const MovieView = inject("store")((props: any) => {
     const writers = movie.MovieWriter.map((writerData: any) => writerData.People.name)
     const directors = movie.MovieDirector.map((directorData: any) => directorData.People.name)
     const formatedDate = moment(movie.releasedDate).format("MMMM Do YYYY");
+
+    let [deleteMovie] = useMutation(DELETE_MOVIE, {
+        onCompleted: (result) => {
+            Alert.alert("The Movie had been deleted", `The movie ${movie.name} has been deleted`);
+            history.push("/")
+        }
+    })
+
     console.log(movie)
     const editHandler = () => {
         history.push(`/edit/movie/${movie.id}`)
@@ -29,11 +37,20 @@ export const MovieView = inject("store")((props: any) => {
 
     const deleteHandler = () => {
         Alert.alert(
-            'Alert Title',
-            'Alert message here...',
+            'Are you sure want to delete this ?',
+            `By pressing Yes, the movie "${movie.name}" will be deleted from the database
+            
+Are you sure you want to PROCEED ?
+            `,
             [
-              {text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
-              {text: 'YES', onPress: () => console.warn('YES Pressed')},
+              {text: 'NO', onPress: () => {}, style: "destructive"},
+              {text: 'YES', onPress: () => {
+                deleteMovie({
+                    variables: {
+                        id: movie.id
+                    }
+                })
+              }},
             ]
         );
     }
