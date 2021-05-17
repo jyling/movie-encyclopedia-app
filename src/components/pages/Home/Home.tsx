@@ -4,6 +4,8 @@ import {
     View,
     StyleSheet,
     Button,
+    Modal,
+    Alert,
 } from 'react-native';
 import tailwind from 'tailwind-rn';
 import { Card } from '../../UI/Card';
@@ -14,46 +16,71 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import { FETCH_MOVIES, SEARCH_MOVIES } from "../../../helper/query";
 import { inputParser } from "../../../helper/inputParser";
 import { loadPartialConfig } from "@babel/core";
+import { Loader } from "../../UI/Loader";
 export const Home = inject("store")(observer((props : any) => {
-    const [page, setPage] = useState(1)
-    let totalPage = 1;
+    const [page, setPage] = useState({
+        page: 1,
+        totalPage: 2
+    })
     const [searchTerm, setSearchTerm] = useState("")
     const [queryTerm, setQueryTerm] = useState({})
     const limit = 3;
-    const result = useQuery(SEARCH_MOVIES(), {
+    const [calledSearch, result] = useLazyQuery(SEARCH_MOVIES(), {
+        fetchPolicy: "no-cache",
         variables: {
           searchMovieInput:  queryTerm,
-          page: page,
-          limit: 3
+          page: page.page,
+          limit: limit
         },
-      })
-
-    let {loading, data, error} = result;
-        console.log({error})
-        if (!loading && !error) {
-            console.log(data.movies)
-            totalPage = (data.movies.pagination.totalPage)
+        onCompleted: () => {
+            totalPageHandler(data.movies.pagination.totalPage)
             props.store.movieStore.setMovies(data)
+        },
+        onError: (e) => {
+            console.log(e);
+            setSearchTerm(prev => "")
+            Alert.alert("We couldn't process your search", e.message)
         }
+    })
+    useEffect(() => {
+        calledSearch();
+    },[])
     
+    let {loading, data, error} = result;
+
     const searchButtonClickHandler =  () => {
         // const [loadQueryMovies, queryInfo] = useLazyQuery(SEARCH_MOVIES(searchTermArray))
         const searchTermArray = inputParser(searchTerm);
-        setPage(1)
         setQueryTerm(searchTermArray);
+        pageHandler(1)
+        calledSearch()
     }
 
-    useEffect(() => {
-        setQueryTerm(queryTerm)
-    }, [page])
+    const pageHandler =  (e) => {
+        const searchTermArray = inputParser(searchTerm);
+        setQueryTerm(searchTermArray);
+        setPage(prev => {
+            return {
+                ...prev,
+                page: e
+            }
+        })
+    }
 
-    console.log({page, totalPage})
+    const totalPageHandler =  (e) => {
+        setPage(prev => {
+            return {
+                ...prev,
+                totalPage: e
+            }
+        })
+    }
 
     return (
         <>
-        <Search setError={error} onButtonClick={searchButtonClickHandler} onSearchTermChange={setSearchTerm}></Search>
-            {!loading && <MovieList onPageChanged={setPage} page={page} totalPage={totalPage} movies={props.store.movieStore.movies}></MovieList>}
-            {loading && <Text>Loading</Text>}
+        <Loader loading={loading}></Loader>
+        <Search value={searchTerm} onButtonClick={searchButtonClickHandler} onSearchTermChange={setSearchTerm}></Search>
+        {!loading && <MovieList onPageChanged={pageHandler} page={page.page} totalPage={page.totalPage} movies={props.store.movieStore.movies}></MovieList>}
         
         </>
     )
