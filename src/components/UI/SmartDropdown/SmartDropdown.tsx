@@ -15,6 +15,7 @@ import { Divider } from "react-native-elements/dist/divider/Divider";
 export const SmartDropdown = (props) => {
     const [modalVisible, setModalVisible] = useState(props.show);
     const [open, setOpen] = useState(false);
+    const [input, setInput] = useState("");
     const [value, setValue] = useState(props.value || []);
     const [createNew, setCreateNew] = useState(false)
     const [items, setItems] = useState(props.items || []);
@@ -38,10 +39,15 @@ export const SmartDropdown = (props) => {
         setValue(value.filter(name => name != clickedName))
     }
 
-    const AddItemHandler = (name: string) => {
-        if (value.indexOf(name.toLowerCase()) == -1 && name.length > 3) {
-            setValue([...value, name.split("_").join(" ")])
+    const AddItemHandler = () => {
+        if (value.indexOf(input.toLowerCase()) == -1 && input.length > 3) {
+            setValue([...value, input.split("_").join(" ").trim()])
         }
+        setInput("")
+    }
+
+    const ContentHandler = (value: string) => {
+        setInput(value)
     }
 
     return (
@@ -78,6 +84,8 @@ export const SmartDropdown = (props) => {
                                 <InputWithButton
                                     deleteContentOnButtonClick={true}
                                     onButtonClick={AddItemHandler}
+                                    onContentChange={ContentHandler}
+                                    value={input}
                                     button={"Add New " + (props.title || "Items")}></InputWithButton>
                             </View>}
                             {!createNew && <DropDownPicker
@@ -113,7 +121,7 @@ export const SmartDropdown = (props) => {
             <Button
                 buttonStyle={tailwind("bg-blue-400 w-1/3 text-center")}
                 onPress={ModalOpenHandler}
-                title={"Add " + (props.title || "Items")}
+                title={"Edit " + (props.title || "Items")}
             />
             </View>
         </View>

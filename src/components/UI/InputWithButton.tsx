@@ -13,9 +13,7 @@ import { Button } from "react-native-elements/dist/buttons/Button";
 import tailwind from 'tailwind-rn';
 
 export function InputWithButton(props : any) {
-    const [content, setContent] = useState(props.value)
     const contentHandler = (value : any) => {
-        setContent(value)
         if (props.onContentChange) {
             props.onContentChange(value);
         }
@@ -23,12 +21,13 @@ export function InputWithButton(props : any) {
 
     const buttonClickHandler = (value : any) => {
         if (props.onButtonClick) {
-            props.onButtonClick(content);
+            props.onButtonClick();
         }
         if (props.deleteContentOnButtonClick) {
-            setContent("")
+            props.onContentChange("");
         }
     }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View
