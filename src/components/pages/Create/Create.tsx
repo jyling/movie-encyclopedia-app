@@ -19,6 +19,7 @@ import { Divider } from "../../UI/Divider";
 import { ImageInput } from "../../UI/ImageInput";
 import { DatePickerModal } from "../../UI/DatePickerModal";
 import { SmartDropdownWrapper } from "../../UI/SmartDropdown/SmartDropdownWrapper";
+import { Loader } from "../../UI/Loader";
 
 
 const initialForm = {
@@ -45,14 +46,15 @@ const initialErrorForm = {
 
 export const Create = inject("store")((props) => {
 
-    const { data, loading, error } = useQuery(FETCH_CHARACTER_PEOPLE_GENRE);
+    let { data, loading, error } = useQuery(FETCH_CHARACTER_PEOPLE_GENRE);
     console.log({data,loading, error})
     const [formError, setFormError] = useState(initialErrorForm);
     const [formData, setFormData] = useState(initialForm);
+    const [manualLoading, setManualLoading] = useState(false);
 
     const  [ addMovie , { data: insertMovieData, data: insertError } ] = useMutation(INSERT_MOVIE, {
         onError: (e) => {
-            console.log(e);
+            console.log({e});
             setFormError(Object.assign.apply(Object, e.graphQLErrors[0].extensions.exception.response.message))
         },
         onCompleted: (data) => {
@@ -131,7 +133,7 @@ export const Create = inject("store")((props) => {
         setFormData(state => {
             return {
                 ...state,
-                image: image
+                image: image.base64
             }
         })
     }   
@@ -147,20 +149,20 @@ export const Create = inject("store")((props) => {
             writers: formData.writers,
             directors: formData.directors
         }
+        addMovie({
+            variables : {
+                createMovieInput : insertData
+            }
+        })
+        setManualLoading
             
-            addMovie({
-                variables : {
-                    createMovieInput : insertData
-                }
-            })
         // setFormData(initialForm) later uncomment
     }
     const formatedDate = moment(formData.releasedDate).format("MMMM Do YYYY");
     return (
         <>
             <ScrollView >
-                {loading && <Text> Loading</Text>}
-
+                <Loader loading={loading || manualLoading} message={"Just a moment"}></Loader>
                 {!loading && <View style={{marginBottom: 300}}>
                     <Card>
                         <Text>{!JSON.stringify(formData)}</Text>
