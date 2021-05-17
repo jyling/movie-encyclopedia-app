@@ -40,7 +40,7 @@ export const SmartDropdown = (props) => {
 
     const AddItemHandler = (name: string) => {
         if (value.indexOf(name.toLowerCase()) == -1 && name.length > 3) {
-            setValue([...value, name])
+            setValue([...value, name.split("_").join(" ")])
         }
     }
 
