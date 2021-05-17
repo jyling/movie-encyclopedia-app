@@ -282,3 +282,10 @@ query movie_find($id : Int!) {
   }
 }
 `
+
+export const DELETE_MOVIE = gql`
+mutation deleteMovie($id : Int!) {
+  removeMovie(id: $id) {
+    id
+  }
+}`
