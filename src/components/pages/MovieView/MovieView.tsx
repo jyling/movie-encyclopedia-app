@@ -42,7 +42,7 @@ export const MovieView = inject("store")((props: any) => {
         <ScrollView style={tailwind("mb-20")}>
             <View style={tailwind("p-2")}>
                 <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
-                    <BackButton></BackButton>
+                    <BackButton to={"/"}></BackButton>
                 </View>
                 <Card>
                     <View style={tailwind("flex justify-center items-end mb-3")}>
