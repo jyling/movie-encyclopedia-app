@@ -228,6 +228,7 @@ mutation updateMovie($updateMovieInput : UpdateMovieInput!){
       releasedDate
       
       MovieGenre {
+        id,
         Genre {
           name
           description
@@ -235,18 +236,21 @@ mutation updateMovie($updateMovieInput : UpdateMovieInput!){
       }
       
       MovieCharacter {
+        id,
         Character {
           name
         }
       }
       
       MovieWriter {
+        id,
         People {
           name
         }
       }
       
       MovieDirector {
+        id,
         People {
           name
         }
