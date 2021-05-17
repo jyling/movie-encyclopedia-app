@@ -23,7 +23,7 @@ export const inputParser = (searchTerm: any) => {
 
     if (searchTermName) searchTermArray.push({ name: searchTermName })
     searchTermArray = searchTermArray.filter((term : any) => {
-        return ["id","name","releasedDate,description","characters","genres","directors","writers"].indexOf(Object.keys(term)[0]) != -1
+        return ["id","name","releasedDate","description","characters","genres","directors","writers"].indexOf(Object.keys(term)[0]) != -1
     })
     var returnObj = {}
     searchTermArray.forEach((term : any) => {
