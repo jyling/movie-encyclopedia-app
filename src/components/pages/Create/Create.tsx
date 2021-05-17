@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { inject } from "mobx-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react"
@@ -46,26 +46,47 @@ const initialErrorForm = {
 
 export const Create = inject("store")((props) => {
 
-    let { data, loading, error } = useQuery(FETCH_CHARACTER_PEOPLE_GENRE);
-    console.log({data,loading, error})
+    
+    
     const [formError, setFormError] = useState(initialErrorForm);
     const [formData, setFormData] = useState(initialForm);
-    const [manualLoading, setManualLoading] = useState(false);
+    const [manualLoading, setManualLoading] = useState(true);
+    const history = useHistory();
+    
+    let [requestProperty, { data, loading, error }] = useLazyQuery(FETCH_CHARACTER_PEOPLE_GENRE, {
+        fetchPolicy: "no-cache",
+        onCompleted: (datas) => {
+            data = datas;
+            setManualLoading(prev => false)
+        },
+        onError: () => {
+            setManualLoading(prev => false)
+        }
+    });
+
+    useEffect(() => {
+        requestProperty()
+    }, []);
 
     const  [ addMovie , { data: insertMovieData, data: insertError } ] = useMutation(INSERT_MOVIE, {
         onError: (e) => {
-            console.log({e});
-            setFormError(Object.assign.apply(Object, e.graphQLErrors[0].extensions.exception.response.message))
+            console.log({e, formData});
+            setManualLoading(false)
+            setFormError(prev => {
+                return { 
+                    prev,
+                    ...e.graphQLErrors[0].extensions.exception.response
+                }
+            })
         },
         onCompleted: (data) => {
             if (data) {
-                console.log({data})
+                setManualLoading(false)
                 props.store.movieStore.pushMovie(data.createMovie)
                 history.push(`/movie/${data.createMovie.id}`)
             }
         }
     })
-    const history = useHistory();
 
     const SelectedCharacterHandler = (characters) => {
         setFormData(state => {
@@ -149,12 +170,12 @@ export const Create = inject("store")((props) => {
             writers: formData.writers,
             directors: formData.directors
         }
+        setManualLoading(true)
         addMovie({
             variables : {
                 createMovieInput : insertData
             }
         })
-        setManualLoading
             
         // setFormData(initialForm) later uncomment
     }
@@ -162,8 +183,9 @@ export const Create = inject("store")((props) => {
     return (
         <>
             <ScrollView >
-                <Loader loading={loading || manualLoading} message={"Just a moment"}></Loader>
-                {!loading && <View style={{marginBottom: 300}}>
+                <Text>{JSON.stringify(formError)}</Text>
+                <Loader loading={manualLoading} message={"Just a moment"}></Loader>
+                {!manualLoading && <View style={{marginBottom: 300}}>
                     <Card>
                         <Text>{!JSON.stringify(formData)}</Text>
                         <Text style={tailwind("text-3xl font-light text-center text-black")}>Create New</Text>
@@ -176,6 +198,7 @@ export const Create = inject("store")((props) => {
                         <Text>Movie Name :</Text>
                         <Input
                             onChangeText={NameContentHandler}
+                            value={formData.name}
                             style={tailwind("text-black")}
                             errorStyle={tailwind("text-red-500 text-sm m-0")}
                             errorMessage={formError.name}
@@ -193,6 +216,7 @@ export const Create = inject("store")((props) => {
                             style={tailwind("text-black")}
                             onChangeText={DescriptionContentHandler}
                             errorStyle={tailwind("text-red-500 text-sm m-0")}
+                            value={formData.description}
                             errorMessage={formError.description}
                         ></Input>
                         <Divider></Divider>

@@ -8,12 +8,13 @@ import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { Input } from 'react-native-elements/dist/input/Input';
 import { useHistory } from 'react-router';
 import tailwind from 'tailwind-rn';
-import { FETCH_CHARACTER_PEOPLE_GENRE, INSERT_MOVIE, UPDATE_MOVIE } from '../../../helper/query';
+import { DELETE_MOVIE, FETCH_CHARACTER_PEOPLE_GENRE, INSERT_MOVIE, UPDATE_MOVIE } from '../../../helper/query';
 import { CreateMovieInput, UpdateMovieInput } from '../../../types/query';
 import { BackButton } from '../../UI/BackButton';
 import { Card } from '../../UI/Card';
 import { DatePickerModal } from '../../UI/DatePickerModal';
 import { ImageInput } from '../../UI/ImageInput';
+import { Loader } from '../../UI/Loader';
 import { SmartDropdownWrapper } from '../../UI/SmartDropdown/SmartDropdownWrapper';
 
 const initialForm = {
@@ -41,10 +42,25 @@ const initialErrorForm = {
 export const Edit = inject("store")((props) => {
     let { match : {params: {id}}} = props
 
-    const { data, loading, error } = useQuery(FETCH_CHARACTER_PEOPLE_GENRE);
-    console.log({data,loading, error})
+    const [manualLoading, setManualLoading] = useState(true);
     const [formError, setFormError] = useState(initialErrorForm);
     const movie = props.store.movieStore.movies.find((movie : any) => movie.id == id)
+    let [requestProperty, { data, loading, error }] = useLazyQuery(FETCH_CHARACTER_PEOPLE_GENRE, {
+        fetchPolicy: "no-cache",
+        onCompleted: (datas) => {
+            console.log(datas)
+            data = datas;
+            setManualLoading(prev => false)
+        },
+        onError: (e) => {
+            setManualLoading(prev => false)
+        }
+    });
+
+    useEffect(() => {
+        requestProperty()
+    }, []);
+
     const [formData, setFormData] = useState({
         name: movie.name,
         image: movie.imageURL,
@@ -64,7 +80,8 @@ export const Edit = inject("store")((props) => {
             }
         }),
         onError: (data => {
-            setFormError(Object.assign.apply(Object, data.graphQLErrors[0].extensions.exception.response.message))
+            console.log({data, a:"tes"})
+            setFormError(data.graphQLErrors[0].extensions.exception.response.message)
         })
     });
 
@@ -171,9 +188,9 @@ export const Edit = inject("store")((props) => {
     return (
         <>
             <ScrollView>
-                {loading && <Text> Loading</Text>}
+                <Loader loading={manualLoading}></Loader>
 
-                {!loading && <View style={{marginBottom: 300}}>
+                {!manualLoading && <View style={{marginBottom: 300}}>
                     <Card>
                         <Text style={tailwind("text-3xl font-light text-center text-black")}>Editing {movie.name}</Text>
                     </Card>
