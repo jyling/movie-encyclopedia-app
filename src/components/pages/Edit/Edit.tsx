@@ -63,7 +63,9 @@ export const Edit = inject("store")((props) => {
                 history.push(`/movie/${data.updateMovie.id}`)
             }
         }),
-        onError: (data => console.log(data))
+        onError: (data => {
+            setFormError(Object.assign.apply(Object, data.graphQLErrors[0].extensions.exception.response.message))
+        })
     });
 
     const history = useHistory();
@@ -164,6 +166,7 @@ export const Edit = inject("store")((props) => {
             writers: formData.writers,
             directors: formData.directors
         }
+        console.log(updateData)
         updateMovie({
             variables : {
                 updateMovieInput : updateData
