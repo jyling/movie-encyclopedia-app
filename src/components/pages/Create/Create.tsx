@@ -183,7 +183,6 @@ export const Create = inject("store")((props) => {
     return (
         <>
             <ScrollView >
-                <Text>{JSON.stringify(formError)}</Text>
                 <Loader loading={manualLoading} message={"Just a moment"}></Loader>
                 {!manualLoading && <View style={{marginBottom: 300}}>
                     <Card>
@@ -204,7 +203,7 @@ export const Create = inject("store")((props) => {
                             errorMessage={formError.name}
                         ></Input>
                         <Divider></Divider>
-                        <Text>Date</Text>
+                        <Text>Released Date</Text>
                         <Text style={tailwind("text-3xl text-center mb-2")}>{formatedDate}</Text>
                         <DatePickerModal 
                             onDateSelected={DateHandler}

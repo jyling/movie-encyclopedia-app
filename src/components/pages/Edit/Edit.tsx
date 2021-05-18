@@ -171,7 +171,6 @@ export const Edit = inject("store")((props) => {
             writers: formData.writers,
             directors: formData.directors
         }
-        console.log(updateData)
         updateMovie({
             variables : {
                 updateMovieInput : updateData
@@ -208,7 +207,7 @@ export const Edit = inject("store")((props) => {
                             errorMessage={formError.name}
                         ></Input>
                         <Divider></Divider>
-                        <Text>Date</Text>
+                        <Text>Released Date</Text>
                         <Text style={tailwind("text-3xl text-center mb-2")}>{formatedDate}</Text>
                         <DatePickerModal 
                             onDateSelected={DateHandler}
