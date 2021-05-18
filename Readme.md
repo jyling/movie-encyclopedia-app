@@ -30,7 +30,7 @@ $ npm run android
 
 # start the react-native server
 $ npm start
-
+```
 
 ## License
 
