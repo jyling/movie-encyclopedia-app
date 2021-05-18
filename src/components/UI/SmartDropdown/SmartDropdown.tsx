@@ -35,7 +35,6 @@ export const SmartDropdown = (props) => {
         }
     }
     const RemoveItemHandler = (clickedName) => {
-        console.log(`item to be removed ${clickedName}`)
         setValue(value.filter(name => name != clickedName))
     }
 
