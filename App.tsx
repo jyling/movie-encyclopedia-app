@@ -5,6 +5,8 @@
  * @format
  * @flow strict-local
  */
+import {graphqlServer} from "@env"
+
 import { NativeRouter } from "react-router-native";
 import React, { useContext } from 'react';
 import type { Node } from 'react';
@@ -18,7 +20,7 @@ import { MovieStoreContext } from "./src/store/MovieStore/MovieStore";
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'http://192.168.1.150:3000/graphql',
+  uri: graphqlServer,
   cache: new InMemoryCache()
 });
 
