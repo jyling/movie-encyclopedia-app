@@ -5,7 +5,8 @@ module.exports = {
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true
-      }
-    ]
+      },
+    ],
+    "module:react-native-dotenv"
   ]
 };
