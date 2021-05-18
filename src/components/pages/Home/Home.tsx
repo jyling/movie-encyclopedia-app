@@ -37,7 +37,24 @@ export const Home = inject("store")(observer((props : any) => {
         },
         onError: (e) => {
             setSearchTerm(prev => "")
-            Alert.alert("We couldn't process your search", e.message)
+            try {
+                const errorCode = e?.graphQLErrors[0]?.extensions;
+                if (errorCode == undefined) {
+                    Alert.alert("We couldn't process your search", "an error has occurred")
+                    return;
+                }
+                if (errorCode.status == 500 || errorCode?.exception?.status == undefined) {
+                    Alert.alert("We couldn't process your search", "something is wrong with the server")
+                    return;
+                }
+                else {
+                    Alert.alert("We couldn't process your search", e.message)
+                    return;
+                }
+            } catch (error) {
+                Alert.alert("We couldn't process your search", "an error has occurred")
+            }
+                
         }
     })
     useEffect(() => {
