@@ -81,7 +81,7 @@ export const Edit = inject("store")((props) => {
         }),
         onError: (data => {
             console.log({data, a:"tes"})
-            setFormError(data.graphQLErrors[0].extensions.exception.response.message)
+            setFormError(data.graphQLErrors[0].extensions.exception.response)
         })
     });
 
@@ -178,7 +178,7 @@ export const Edit = inject("store")((props) => {
         })
         // setFormData(initialForm) later uncomment
     }
-    
+    console.log(formError)
     const formatedDate = moment(formData.releasedDate).format("MMMM Do YYYY");
     const  imageData = formData.image? {
         uri: formData.image,
