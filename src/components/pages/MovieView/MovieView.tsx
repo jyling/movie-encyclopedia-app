@@ -30,7 +30,6 @@ export const MovieView = inject("store")((props: any) => {
         }
     })
 
-    console.log(movie)
     const editHandler = () => {
         history.push(`/edit/movie/${movie.id}`)
     }
@@ -43,14 +42,16 @@ export const MovieView = inject("store")((props: any) => {
 Are you sure you want to PROCEED ?
             `,
             [
-              {text: 'NO', onPress: () => {}, style: "destructive"},
-              {text: 'YES', onPress: () => {
-                deleteMovie({
-                    variables: {
-                        id: movie.id
+                { text: 'NO', onPress: () => { }, style: "destructive" },
+                {
+                    text: 'YES', onPress: () => {
+                        deleteMovie({
+                            variables: {
+                                id: movie.id
+                            }
+                        })
                     }
-                })
-              }},
+                },
             ]
         );
     }
@@ -58,18 +59,18 @@ Are you sure you want to PROCEED ?
     return (
         <ScrollView style={tailwind("mb-20")}>
             <View style={tailwind("p-2")}>
-                <View style={tailwind("flex flex-row justify-between items-end px-3 mb-3")}>
-                    <BackButton to={"/"}></BackButton>
-                </View>
                 <Card>
-                    <View style={tailwind("flex justify-center items-end mb-3")}>
-                        <View style={tailwind("flex flex-row")}>
-                            <Button onPress={editHandler} title="Edit" buttonStyle={
-                                tailwind("bg-yellow-500 px-5 mr-2")
-                            }></Button>
-                            <Button onPress={deleteHandler} title="Delete" buttonStyle={
-                                tailwind("bg-red-500 px-5")
-                            }></Button>
+                    <View style={tailwind("flex flex-row justify-between items-end px-3 my-3")}>
+                        <BackButton to={"/"}></BackButton>
+                        <View style={tailwind("flex justify-center items-end")}>
+                            <View style={tailwind("flex flex-row")}>
+                                <Button onPress={editHandler} title="Edit" buttonStyle={
+                                    tailwind("bg-yellow-500 px-5 mr-2")
+                                }></Button>
+                                <Button onPress={deleteHandler} title="Delete" buttonStyle={
+                                    tailwind("bg-red-500 px-5")
+                                }></Button>
+                            </View>
                         </View>
                     </View>
                     <View style={tailwind("flex justify-center items-center mb-3")}>
