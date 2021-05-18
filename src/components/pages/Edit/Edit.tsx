@@ -80,7 +80,6 @@ export const Edit = inject("store")((props) => {
             }
         }),
         onError: (data => {
-            console.log({data, a:"tes"})
             setFormError(data.graphQLErrors[0].extensions.exception.response)
         })
     });
